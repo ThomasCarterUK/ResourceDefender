@@ -35,19 +35,7 @@ public class ResourceDefender extends BasicGame {
     }
     
     public void checkCollisions() {
-		Rectangle p = player.getBounds();
-		Rectangle c1 = world.getBounds();
-		Rectangle c2 = world.getBounds2();
 		
-		if (p.intersects(c1)) {
-			player.ground = c1.getX();
-		}
-		else if (p.intersects(c2)) {
-			player.ground = c2.getX() - player.getHeight();
-		}
-		else {
-			player.ground = world.getHeight() - (player.getHeight() + 35);
-		}
 	}
     
     @Override

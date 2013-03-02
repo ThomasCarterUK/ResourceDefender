@@ -27,8 +27,6 @@ public class World {
 	
 	public World() throws SlickException {
 		background = new Image("res/background.png");
-		rect = new Rectangle(232, 578, 94, 10);
-		rect2 = new Rectangle(480, 520, 90, 10);
 	}
 	
 	public boolean allowDebugging() {
@@ -36,15 +34,7 @@ public class World {
 	}
 	
 	public void addCollision(Rectangle rectangle) {
-		collisions.add(rectangle);
-	}
-	
-	public Rectangle getBounds() {
-		return new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-	}
-	
-	public Rectangle getBounds2() {
-		return new Rectangle(rect2.getX(), rect2.getY(), rect2.getWidth(), rect2.getHeight());
+		
 	}
 	
 	public float getHeight() {
@@ -60,10 +50,8 @@ public class World {
 		background.draw();
 		
 		if(ALLOW_DEBUGGING) {
-			g.setColor(Color.white);
+			g.setColor(Color.black);
 			g.drawRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-			g.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-			g.drawRect(rect2.getX(), rect2.getY(), rect2.getWidth(), rect2.getHeight());
 		}
 	}
 

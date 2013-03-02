@@ -19,14 +19,19 @@ public class Player {
 	public static Rectangle rect;
 	private static float width;
 	private static float height;
+	public static float defaultGround;
 	public static float ground;
-	public static float x;
-	public static float y;
+	public static float x = 30;
+	public static float y = 30 ;
 	private Image image;
 	private float movementSpeed = 0.7f;
 	
+	public boolean allowMoveRight = true;
+	public boolean allowMoveLeft = true;
+	
 	public static boolean isJumping  = false;
 	public boolean isColliding = false;
+	public boolean isOnGround = false;
 	public static boolean hasWeapon = true;
 	public static ArrayList bullets;
 	
@@ -40,7 +45,8 @@ public class Player {
 		bullets = new ArrayList();
 		keyboard = new Keyboard();
 		world = new World();
-		ground = world.getHeight() - (height + 35);
+		defaultGround = world.getHeight() - (height + 25);
+		ground = world.getHeight() - (height + 25);
 	}
 	
 	public static ArrayList getBullets() {
@@ -59,31 +65,37 @@ public class Player {
 	public void update(GameContainer container) throws SlickException {
 		Input input = container.getInput();
 		
-		
+		if (y >= defaultGround) {
+			isOnGround = true;
+			
+		}
+		else {
+			isOnGround = false;
+		}
 		
 		if (hasWeapon) {
 			image = new Image("res/player_weapon.png");
 		}
 		
 		if (y < ground) {
-			y += gravity;
+			//y += gravity;
 		}
 		
 		if (y >= ground || isColliding) {
 			isJumping = false;
 		}
 		
-		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP) || input.isControllerUp(0)) && y > 0) {
-			setY(y -= (movementSpeed + 0.6f));
+		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP)) && y > 20) {
+			setY(y -= movementSpeed);
 			isJumping = true;
 		}
 		else if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && y < ground) {
 			setY(y += movementSpeed);
 		}
-		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && x > 0) {
+		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (x > 20)) {
 			setX(x -= movementSpeed);
 		}
-		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - width)) {
+		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - (width + 20))) {
 			setX(x += movementSpeed);
 		}
 		if (input.isKeyPressed(input.KEY_SPACE)) {
@@ -96,6 +108,10 @@ public class Player {
 	
 	public static float getX() {
 		return x;
+	}
+	
+	public static float getMaxX() {
+		return rect.getMaxX();
 	}
 	
 	public static float getY() {
