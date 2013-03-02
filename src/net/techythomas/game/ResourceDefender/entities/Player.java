@@ -2,6 +2,7 @@ package net.techythomas.game.ResourceDefender.entities;
 
 import java.util.ArrayList;
 
+import net.techythomas.game.ResourceDefender.World;
 import net.techythomas.game.ResourceDefender.control.Keyboard;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
@@ -13,6 +14,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Player {
 	
+	private World world;
 	private Keyboard keyboard;
 	public static Rectangle rect;
 	private static float width;
@@ -30,13 +32,14 @@ public class Player {
 	
 	private float gravity = 0.6f;
 	
-	public Player(Image image, float width, float height) {
+	public Player(Image image, float width, float height) throws SlickException {
 		this.image = image;
 		this.width = width;
 		this.height = height;
 		rect = new Rectangle(width, height, x, y);
 		bullets = new ArrayList();
 		keyboard = new Keyboard();
+		world = new World();
 	}
 	
 	public static ArrayList getBullets() {
@@ -64,6 +67,10 @@ public class Player {
 		if (y >= ground || isColliding) {
 			isJumping = false;
 		}
+		
+		if (rect.intersects(world.rect)) {
+    		System.out.println("collision");
+    	}
 		
 		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP) || input.isControllerUp(0)) && y > 0) {
 			setY(y -= (movementSpeed + 0.6f));

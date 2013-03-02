@@ -18,7 +18,7 @@ public class World {
 	private Image background;
 	private boolean ALLOW_DEBUGGING = true;
 	
-	public Rectangle rect;
+	public static Rectangle rect;
 	private Rectangle rect2;
 	
 	public ArrayList collisions;

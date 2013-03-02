@@ -63,9 +63,7 @@ public class ResourceDefender extends BasicGame {
     	
     	//world.update(container);
     	
-    	if (player.rect.intersects(world.rect)) {
-    		System.out.println("collision");
-    	}
+    	
     }
 
     
