@@ -32,7 +32,7 @@ public class Player {
 	public static boolean isJumping  = false;
 	public boolean isColliding = false;
 	public boolean isOnGround = false;
-	public static boolean hasWeapon = true;
+	public static boolean hasWeapon = false;
 	public static ArrayList bullets;
 	
 	private float gravity = 0.6f;
