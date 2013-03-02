@@ -23,10 +23,12 @@ public class World {
 	public static Rectangle rect;
 	private Rectangle rect2;
 	
-	public ArrayList collisions;
+	public ArrayList walls;
 	
 	public World() throws SlickException {
 		background = new Image("res/background.png");
+		rect = new Rectangle(133, 119, 280, 20);
+		rect2 = new Rectangle(393, 139, 20, 90);
 	}
 	
 	public boolean allowDebugging() {
@@ -34,7 +36,7 @@ public class World {
 	}
 	
 	public void addCollision(Rectangle rectangle) {
-		
+		walls.add(rectangle);
 	}
 	
 	public float getHeight() {
@@ -52,6 +54,8 @@ public class World {
 		if(ALLOW_DEBUGGING) {
 			g.setColor(Color.black);
 			g.drawRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+			g.draw(rect);
+			g.draw(rect2);
 		}
 	}
 
