@@ -40,7 +40,6 @@ public class Player {
 		bullets = new ArrayList();
 		keyboard = new Keyboard();
 		world = new World();
-		;
 		ground = world.getHeight() - (height + 35);
 	}
 	
@@ -73,10 +72,6 @@ public class Player {
 		if (y >= ground || isColliding) {
 			isJumping = false;
 		}
-		
-		if (rect.intersects(world.rect)) {
-    		System.out.println("collision");
-    	}
 		
 		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP) || input.isControllerUp(0)) && y > 0) {
 			setY(y -= (movementSpeed + 0.6f));
