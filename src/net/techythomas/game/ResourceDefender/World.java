@@ -17,6 +17,8 @@ public class World {
 	private Player player;
 	private Image background;
 	private boolean ALLOW_DEBUGGING = true;
+	private float height = 720;
+	private float width = 1280;
 	
 	public static Rectangle rect;
 	private Rectangle rect2;
@@ -35,6 +37,18 @@ public class World {
 	
 	public void addCollision(Rectangle rectangle) {
 		collisions.add(rectangle);
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+	}
+	
+	public Rectangle getBounds2() {
+		return new Rectangle(rect2.getX(), rect2.getY(), rect2.getWidth(), rect2.getHeight());
+	}
+	
+	public float getHeight() {
+		return height;
 	}
 	
 	public void update(GameContainer container) {

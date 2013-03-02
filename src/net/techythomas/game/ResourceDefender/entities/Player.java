@@ -40,6 +40,8 @@ public class Player {
 		bullets = new ArrayList();
 		keyboard = new Keyboard();
 		world = new World();
+		;
+		ground = world.getHeight() - (height + 35);
 	}
 	
 	public static ArrayList getBullets() {
@@ -51,10 +53,14 @@ public class Player {
 		bullets.add(bullet);
 	}
 	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, width, height);
+	}
+	
 	public void update(GameContainer container) throws SlickException {
 		Input input = container.getInput();
 		
-		ground = container.getHeight() - (height + 35);
+		
 		
 		if (hasWeapon) {
 			image = new Image("res/player_weapon.png");
