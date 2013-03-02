@@ -66,7 +66,7 @@ public class Player {
 		}
 		
 		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP) || input.isControllerUp(0)) && y > 0) {
-			setY(y -= (movementSpeed + 0.4f));
+			setY(y -= (movementSpeed + 0.6f));
 			isJumping = true;
 		}
 		else if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && y < ground) {
