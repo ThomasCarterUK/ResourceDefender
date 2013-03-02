@@ -23,19 +23,18 @@ public class World {
 	public static Rectangle rect;
 	private Rectangle rect2;
 	
-	public ArrayList walls;
+	public ArrayList<Rectangle> walls;
 	
 	public World() throws SlickException {
 		background = new Image("res/background.png");
-		rect = new Rectangle(133, 119, 280, 20);
-		rect2 = new Rectangle(393, 139, 20, 90);
+		walls = new ArrayList();
 	}
 	
 	public boolean allowDebugging() {
 		return ALLOW_DEBUGGING;
 	}
 	
-	public void addCollision(Rectangle rectangle) {
+	public void addWalls(Rectangle rectangle) {
 		walls.add(rectangle);
 	}
 	
@@ -45,7 +44,6 @@ public class World {
 	
 	public void update(GameContainer container) {
 		
-		
 	}	
 	
 	public void render(Graphics g) {
@@ -54,8 +52,11 @@ public class World {
 		if(ALLOW_DEBUGGING) {
 			g.setColor(Color.black);
 			g.drawRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-			g.draw(rect);
-			g.draw(rect2);
+			
+			for (Rectangle rectangle : walls) {
+				g.draw(rectangle);
+			}
+			
 		}
 	}
 

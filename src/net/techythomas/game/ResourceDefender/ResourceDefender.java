@@ -1,6 +1,9 @@
 package net.techythomas.game.ResourceDefender;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import net.techythomas.game.ResourceDefender.control.Keyboard;
@@ -38,6 +41,24 @@ public class ResourceDefender extends BasicGame {
 		
 	}
     
+    private void loadWalls(World world, InputStream stream) {
+    	BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    	String line;
+    	
+    	try {
+    		while ((line = reader.readLine()) != null) {
+    			if (line.startsWith("#") || line.trim().length() < 1) continue;
+    			String[] coords = line.split(" ", 4);
+    			Rectangle rect = new Rectangle(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]));
+    			world.addWalls(rect);
+    		}
+    	}
+    	catch (IOException e) {
+    		System.out.println("Couldn't load walls!");
+    		e.printStackTrace();
+    	}
+    }
+    
     @Override
     public void init(GameContainer container) throws SlickException {
     	player = new Player(new Image("res/player.png"), 80, 112);
@@ -47,6 +68,8 @@ public class ResourceDefender extends BasicGame {
     	bullet = new Bullet(player.getX(), player.getWidth());
     	keyboard = new Keyboard();
     	container.getInput().addMouseListener(editor);
+    	
+    	loadWalls(world, getClass().getResourceAsStream("res/walls.txt"));
     	
     	//BufferedReader reader = new BufferedReader("res/collisions.txt");
     	//reader.readLine();
