@@ -16,7 +16,6 @@ import org.newdawn.slick.geom.Rectangle;
 public class Player {
 	
 	private World world;
-	private Keyboard keyboard;
 	public static Rectangle rect;
 	private static float width;
 	private static float height;
@@ -47,7 +46,6 @@ public class Player {
 		this.height = height;
 		rect = new Rectangle(width, height, x, y);
 		bullets = new ArrayList();
-		keyboard = new Keyboard();
 		world = new World();
 		defaultGround = world.getHeight() - (height + 25);
 		ground = defaultGround;
@@ -124,7 +122,7 @@ public class Player {
 		}
 		if (input.isKeyPressed(input.KEY_SPACE)) {
 			if (hasWeapon) {
-				fire();
+				
 			}
 			
 		}

@@ -1,20 +1,15 @@
 package net.techythomas.game.ResourceDefender;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import net.techythomas.game.ResourceDefender.control.Keyboard;
 import net.techythomas.game.ResourceDefender.entities.Player;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -28,16 +23,14 @@ public class ResourceDefender extends BasicGame {
 	private static int height = 720;
 	private static boolean fullscreen = false;
 	
-	private int collisionTime = 0;
-	
-	public boolean allowMoveUp = true;
-	
 	private Rectangle rect;
 	private Bullet bullet;
 	
 	private Player player;
 	private World world;
 	private LevelEditor editor;
+	
+	private ArrayList<Bullet> bullets;
 
     public ResourceDefender() {
         super("Resource Defender");
@@ -88,6 +81,7 @@ public class ResourceDefender extends BasicGame {
     	rect = new Rectangle(player.getWidth(), player.getHeight(), player.getX(), player.getY());
     	editor = new LevelEditor();
     	bullet = new Bullet(player.getX(), player.getWidth());
+    	bullets = player.getBullets();
     	container.getInput().addMouseListener(editor);
     	
     	addWalls(world, getClass().getResourceAsStream("walls.txt"));
@@ -98,7 +92,7 @@ public class ResourceDefender extends BasicGame {
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-    	ArrayList bullets = player.getBullets();
+    	
     	for (int w = 0; w < bullets.size(); w++) {
     		Bullet bullet = (Bullet) bullets.get(w);
     		if (bullet.getVisible() == true) {
@@ -121,7 +115,6 @@ public class ResourceDefender extends BasicGame {
         world.render(g);
         player.render();
         
-        ArrayList bullets = player.getBullets();
         for (int w = 0; w < bullets.size(); w++) {
         	Bullet bullet = (Bullet) bullets.get(w);
         	bullet.draw(50, 30);
