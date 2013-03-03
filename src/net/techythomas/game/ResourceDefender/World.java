@@ -20,6 +20,8 @@ public class World {
 	private float height = 720;
 	private float width = 1280;
 	
+	public boolean allowMoveUp = true;
+	
 	public Rectangle rect;
 	
 	public ArrayList<Rectangle> walls;

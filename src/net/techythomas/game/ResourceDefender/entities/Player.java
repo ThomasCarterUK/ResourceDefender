@@ -2,6 +2,7 @@ package net.techythomas.game.ResourceDefender.entities;
 
 import java.util.ArrayList;
 
+import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.World;
 import net.techythomas.game.ResourceDefender.control.Keyboard;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
@@ -26,7 +27,7 @@ public class Player {
 	private Image image;
 	private float movementSpeed = 0.7f;
 	
-	public boolean allowMoveUp = true;
+	public static boolean allowMoveUp = true;
 	public boolean allowMoveDown = true;
 	public boolean allowMoveRight = true;
 	public boolean allowMoveLeft = true;
@@ -51,7 +52,7 @@ public class Player {
 		keyboard = new Keyboard();
 		world = new World();
 		defaultGround = world.getHeight() - (height + 25);
-		ground = world.getHeight() - (height + 25);
+		ground = defaultGround;
 	}
 	
 	public static ArrayList getBullets() {
@@ -85,14 +86,30 @@ public class Player {
 		if (y < ground) {
 			//y += gravity;
 		}
-		
-		if (y >= ground || isColliding) {
-			isJumping = false;
+	
+		if (isColliding) {
+			if (FACING == 0) {
+				allowMoveUp = false;
+			}
+			else if (FACING == 1) {
+				allowMoveDown = false;
+			}
+			else if (FACING == 2) {
+				allowMoveLeft = false;
+			}
+			else if (FACING == 3) {
+				allowMoveRight = false;
+			}
+		}
+		else {
+			allowMoveUp = true;
+			allowMoveDown = true;
+			allowMoveLeft = true;
+			allowMoveRight = true;
 		}
 		
 		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP)) && (y > 20) && allowMoveUp) {
 			setY(y -= movementSpeed);
-			isJumping = true;
 			FACING = 0;
 		}
 		else if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && (y < ground) && allowMoveDown) {
@@ -113,6 +130,10 @@ public class Player {
 			}
 			
 		}
+	}
+	
+	public static void setAllowMoveUp(boolean bool) {
+		allowMoveUp = bool;
 	}
 	
 	public static float getX() {
@@ -158,7 +179,5 @@ public class Player {
 		}
 		image.draw(x, y, width, height);
 	}
-	
-	
 
 }

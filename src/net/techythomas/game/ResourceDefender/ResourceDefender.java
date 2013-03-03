@@ -28,6 +28,10 @@ public class ResourceDefender extends BasicGame {
 	private static int height = 720;
 	private static boolean fullscreen = false;
 	
+	private int collisionTime = 0;
+	
+	public boolean allowMoveUp = true;
+	
 	private Rectangle rect;
 	private Bullet bullet;
 	
@@ -39,49 +43,24 @@ public class ResourceDefender extends BasicGame {
         super("Resource Defender");
     }
     
-    public void checkCollisions() {
-		Rectangle p = player.getBounds();
-		Rectangle w = world.getWallBounds();
-		
-		if (p.intersects(w)) {
-			if (player.FACING == 0) {
-				player.allowMoveUp = false;
-				player.allowMoveDown = true;
-				player.allowMoveLeft = true;
-				player.allowMoveRight = true;
-				
-			}
-			else if (player.FACING == 1) {
-				player.allowMoveUp = true;
-				player.allowMoveDown = false;
-				player.allowMoveLeft = true;
-				player.allowMoveRight = true;
-			}
-			else if (player.FACING == 2) {
-				player.allowMoveUp = true;
-				player.allowMoveDown = true;
-				player.allowMoveLeft = false;
-				player.allowMoveRight = true;
-				player.cannotMoveDiagonalLeft = true;
-			}
-			else if (player.FACING == 3) {
-				player.allowMoveUp = true;
-				player.allowMoveDown = true;
-				player.allowMoveLeft = true;
-				player.allowMoveRight = false;
-					player.cannotMoveDiagonalRight = true;
-			}
-			
+    public boolean collidingWithWall() throws SlickException {
+    	for (int i = 0; i < world.walls.size(); i++) {
+    		Rectangle w = (Rectangle) world.walls.get(i);
+    		if (player.getBounds().intersects(w)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public void checkCollisions() throws SlickException {
+		if (collidingWithWall()) {
+			player.isColliding = true;
 		}
-		
 		else {
-			player.allowMoveUp = true;
-			player.allowMoveDown = true;
-			player.allowMoveLeft = true;
-			player.allowMoveRight = true;
-			player.cannotMoveDiagonalRight = false;
-			player.cannotMoveDiagonalLeft = false;
+			player.isColliding = false;
 		}
+		
 	}
     
     public void addWalls (World world, InputStream stream) {
