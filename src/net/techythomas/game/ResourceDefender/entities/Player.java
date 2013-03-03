@@ -30,6 +30,8 @@ public class Player {
 	public boolean allowMoveDown = true;
 	public boolean allowMoveRight = true;
 	public boolean allowMoveLeft = true;
+	public boolean cannotMoveDiagonalRight = false;
+	public boolean cannotMoveDiagonalLeft = false;
 	public int FACING = 3;
 	
 	public static boolean isJumping  = false;
@@ -97,11 +99,11 @@ public class Player {
 			setY(y += movementSpeed);
 			FACING = 1;
 		}
-		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (x > 20) && allowMoveLeft) {
+		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (x > 20) && allowMoveLeft && !cannotMoveDiagonalLeft) {
 			setX(x -= movementSpeed);
 			FACING = 2;
 		}
-		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - (width + 20)) && allowMoveRight) {
+		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - (width + 20)) && allowMoveRight && !cannotMoveDiagonalRight) {
 			setX(x += movementSpeed);
 			FACING = 3;
 		}

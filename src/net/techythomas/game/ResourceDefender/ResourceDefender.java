@@ -49,6 +49,7 @@ public class ResourceDefender extends BasicGame {
 				player.allowMoveDown = true;
 				player.allowMoveLeft = true;
 				player.allowMoveRight = true;
+				
 			}
 			else if (player.FACING == 1) {
 				player.allowMoveUp = true;
@@ -61,13 +62,16 @@ public class ResourceDefender extends BasicGame {
 				player.allowMoveDown = true;
 				player.allowMoveLeft = false;
 				player.allowMoveRight = true;
+				player.cannotMoveDiagonalLeft = true;
 			}
 			else if (player.FACING == 3) {
 				player.allowMoveUp = true;
 				player.allowMoveDown = true;
 				player.allowMoveLeft = true;
 				player.allowMoveRight = false;
+					player.cannotMoveDiagonalRight = true;
 			}
+			
 		}
 		
 		else {
@@ -75,6 +79,8 @@ public class ResourceDefender extends BasicGame {
 			player.allowMoveDown = true;
 			player.allowMoveLeft = true;
 			player.allowMoveRight = true;
+			player.cannotMoveDiagonalRight = false;
+			player.cannotMoveDiagonalLeft = false;
 		}
 	}
     
