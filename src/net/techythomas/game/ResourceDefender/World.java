@@ -20,18 +20,21 @@ public class World {
 	private float height = 720;
 	private float width = 1280;
 	
-	public static Rectangle rect;
-	private Rectangle rect2;
+	public Rectangle rect;
 	
 	public ArrayList<Rectangle> walls;
 	
 	public World() throws SlickException {
 		background = new Image("res/background.png");
-		walls = new ArrayList();
+		walls = new ArrayList<Rectangle>();
 	}
 	
 	public boolean allowDebugging() {
 		return ALLOW_DEBUGGING;
+	}
+	
+	public Rectangle getWallBounds() {
+		return new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 	
 	public void addWalls(Rectangle rectangle) {
@@ -55,6 +58,7 @@ public class World {
 			
 			for (Rectangle rectangle : walls) {
 				g.draw(rectangle);
+				this.rect = rectangle;
 			}
 			
 		}

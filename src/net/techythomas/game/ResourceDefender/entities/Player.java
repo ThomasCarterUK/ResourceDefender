@@ -26,6 +26,8 @@ public class Player {
 	private Image image;
 	private float movementSpeed = 0.7f;
 	
+	public boolean allowMoveUp = true;
+	public boolean allowMoveDown = true;
 	public boolean allowMoveRight = true;
 	public boolean allowMoveLeft = true;
 	public int FACING = 3;
@@ -86,20 +88,20 @@ public class Player {
 			isJumping = false;
 		}
 		
-		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP)) && y > 20) {
+		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP)) && (y > 20) && allowMoveUp) {
 			setY(y -= movementSpeed);
 			isJumping = true;
 			FACING = 0;
 		}
-		else if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && y < ground) {
+		else if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && (y < ground) && allowMoveDown) {
 			setY(y += movementSpeed);
 			FACING = 1;
 		}
-		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (x > 20)) {
+		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (x > 20) && allowMoveLeft) {
 			setX(x -= movementSpeed);
 			FACING = 2;
 		}
-		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - (width + 20))) {
+		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - (width + 20)) && allowMoveRight) {
 			setX(x += movementSpeed);
 			FACING = 3;
 		}

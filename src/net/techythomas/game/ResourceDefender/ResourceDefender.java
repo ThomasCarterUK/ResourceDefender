@@ -34,14 +34,48 @@ public class ResourceDefender extends BasicGame {
 	private Player player;
 	private World world;
 	private LevelEditor editor;
-	private Keyboard keyboard;
 
     public ResourceDefender() {
         super("Resource Defender");
     }
     
     public void checkCollisions() {
+		Rectangle p = player.getBounds();
+		Rectangle w = world.getWallBounds();
 		
+		if (p.intersects(w)) {
+			if (player.FACING == 0) {
+				player.allowMoveUp = false;
+				player.allowMoveDown = true;
+				player.allowMoveLeft = true;
+				player.allowMoveRight = true;
+			}
+			else if (player.FACING == 1) {
+				player.allowMoveUp = true;
+				player.allowMoveDown = false;
+				player.allowMoveLeft = true;
+				player.allowMoveRight = true;
+			}
+			else if (player.FACING == 2) {
+				player.allowMoveUp = true;
+				player.allowMoveDown = true;
+				player.allowMoveLeft = false;
+				player.allowMoveRight = true;
+			}
+			else if (player.FACING == 3) {
+				player.allowMoveUp = true;
+				player.allowMoveDown = true;
+				player.allowMoveLeft = true;
+				player.allowMoveRight = false;
+			}
+		}
+		
+		else {
+			player.allowMoveUp = true;
+			player.allowMoveDown = true;
+			player.allowMoveLeft = true;
+			player.allowMoveRight = true;
+		}
 	}
     
     public void addWalls (World world, InputStream stream) {
@@ -69,7 +103,6 @@ public class ResourceDefender extends BasicGame {
     	rect = new Rectangle(player.getWidth(), player.getHeight(), player.getX(), player.getY());
     	editor = new LevelEditor();
     	bullet = new Bullet(player.getX(), player.getWidth());
-    	keyboard = new Keyboard();
     	container.getInput().addMouseListener(editor);
     	
     	addWalls(world, getClass().getResourceAsStream("walls.txt"));
