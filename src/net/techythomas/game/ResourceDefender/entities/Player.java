@@ -10,6 +10,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Player {
@@ -24,6 +25,7 @@ public class Player {
 	public static float y = 30 ;
 	private Image image;
 	private float movementSpeed = 0.7f;
+	private SpriteSheet sheet;
 	
 	public static boolean allowMoveUp = true;
 	public boolean allowMoveDown = true;
@@ -48,6 +50,7 @@ public class Player {
 		world = new World();
 		defaultGround = world.getHeight() - (height + 25);
 		ground = defaultGround;
+		sheet = new SpriteSheet(new Image("res/player_sheet.png"), 70, 92);
 	}
 	
 	public static ArrayList getBullets() {
@@ -161,16 +164,24 @@ public class Player {
 	
 	public void render() throws SlickException {
 		if (FACING == 0) {
-			image = new Image("res/player_up.png");
+			sheet.startUse();
+			image = sheet.getSprite(0, 0);
+			sheet.endUse();
 		}
 		else if (FACING == 1) {
-			image = new Image("res/player_down.png");
+			sheet.startUse();
+			image = sheet.getSprite(1, 0);
+			sheet.endUse();
 		}
 		else if (FACING == 2) {
-			image = new Image("res/player_left.png");
+			sheet.startUse();
+			image = sheet.getSprite(2, 0);
+			sheet.endUse();
 		}
 		else if (FACING == 3) {
-			image = new Image("res/player_right.png");
+			sheet.startUse();
+			image = sheet.getSprite(3, 0);
+			sheet.endUse();
 		}
 		image.draw(x, y, width, height);
 	}
