@@ -28,6 +28,7 @@ public class Player {
 	
 	public boolean allowMoveRight = true;
 	public boolean allowMoveLeft = true;
+	public int FACING = 3;
 	
 	public static boolean isJumping  = false;
 	public boolean isColliding = false;
@@ -88,15 +89,19 @@ public class Player {
 		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP)) && y > 20) {
 			setY(y -= movementSpeed);
 			isJumping = true;
+			FACING = 0;
 		}
 		else if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && y < ground) {
 			setY(y += movementSpeed);
+			FACING = 1;
 		}
 		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (x > 20)) {
 			setX(x -= movementSpeed);
+			FACING = 2;
 		}
 		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - (width + 20))) {
 			setX(x += movementSpeed);
+			FACING = 3;
 		}
 		if (input.isKeyPressed(input.KEY_SPACE)) {
 			if (hasWeapon) {
@@ -134,8 +139,20 @@ public class Player {
 		rect.setY(y);
 	}
 	
-	public void render() {
-		image.draw(x, y);
+	public void render() throws SlickException {
+		if (FACING == 0) {
+			image = new Image("res/player_up.png");
+		}
+		else if (FACING == 1) {
+			image = new Image("res/player_down.png");
+		}
+		else if (FACING == 2) {
+			image = new Image("res/player_left.png");
+		}
+		else if (FACING == 3) {
+			image = new Image("res/player_right.png");
+		}
+		image.draw(x, y, width, height);
 	}
 	
 	
