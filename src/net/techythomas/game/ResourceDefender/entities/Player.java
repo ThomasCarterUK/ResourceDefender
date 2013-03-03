@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.World;
-import net.techythomas.game.ResourceDefender.control.Keyboard;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
 import org.newdawn.slick.GameContainer;

@@ -1,7 +1,5 @@
 package net.techythomas.game.ResourceDefender;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 
