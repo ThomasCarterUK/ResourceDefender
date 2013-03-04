@@ -6,6 +6,7 @@ import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.World;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -17,6 +18,7 @@ public class Player {
 	
 	private World world;
 	public static Rectangle rect;
+	protected Rectangle frameSize;
 	private static float width;
 	private static float height;
 	public static float defaultGround;
@@ -24,8 +26,11 @@ public class Player {
 	public static float x = 30;
 	public static float y = 30 ;
 	private Image image;
-	private float movementSpeed = 0.7f;
-	private SpriteSheet sheet;
+	private float movementSpeed = 0.25f * 17;
+	protected SpriteSheet sheet;
+	private int animIndex;
+	private int animCount;
+	private int frame = 0;
 	
 	public static boolean allowMoveUp = true;
 	public boolean allowMoveDown = true;
@@ -45,12 +50,14 @@ public class Player {
 		this.image = image;
 		this.width = width;
 		this.height = height;
-		rect = new Rectangle(width, height, x, y);
+		rect = new Rectangle(x, y, width, height);
+		frameSize = new Rectangle(x, y, width, height);
 		bullets = new ArrayList();
 		world = new World();
 		defaultGround = world.getHeight() - (height + 25);
 		ground = defaultGround;
-		sheet = new SpriteSheet(new Image("res/player_sheet.png"), 70, 92);
+		sheet = new SpriteSheet(new Image("res/spritesheets/player.png"), 70, 92);
+		animCount = (int) (sheet.getWidth() / frameSize.getWidth());
 	}
 	
 	public static ArrayList getBullets() {
@@ -64,6 +71,10 @@ public class Player {
 	
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height);
+	}
+	
+	public void Animation(SpriteSheet frames, int duration) {
+		
 	}
 	
 	public void update(GameContainer container) throws SlickException {
@@ -122,12 +133,21 @@ public class Player {
 			setX(x += movementSpeed);
 			FACING = 3;
 		}
+		if (input.isKeyDown(input.KEY_LSHIFT)) {
+			for (int frame = 0; frame < 4; frame++) {
+				image = sheet.getSprite(frame, 1);
+			}
+		}
+		else {
+			
+		}
 		if (input.isKeyPressed(input.KEY_SPACE)) {
 			if (hasWeapon) {
 				
 			}
 			
 		}
+		
 	}
 	
 	public static void setAllowMoveUp(boolean bool) {
@@ -163,27 +183,14 @@ public class Player {
 	}
 	
 	public void render() throws SlickException {
-		if (FACING == 0) {
-			sheet.startUse();
-			image = sheet.getSprite(0, 0);
-			sheet.endUse();
-		}
-		else if (FACING == 1) {
-			sheet.startUse();
-			image = sheet.getSprite(1, 0);
-			sheet.endUse();
-		}
-		else if (FACING == 2) {
-			sheet.startUse();
-			image = sheet.getSprite(2, 0);
-			sheet.endUse();
-		}
-		else if (FACING == 3) {
-			sheet.startUse();
-			image = sheet.getSprite(3, 0);
-			sheet.endUse();
-		}
-		image.draw(x, y, width, height);
+		frame++;
+		if (frame % 10 == 0) animIndex = ((animIndex + 1) % animCount);
+		
+		sheet.startUse();
+		sheet.renderInUse((int) x, (int) y, animIndex, FACING);
+		sheet.endUse();
+
+		//image.draw(x, y, width, height);
 	}
 
 }

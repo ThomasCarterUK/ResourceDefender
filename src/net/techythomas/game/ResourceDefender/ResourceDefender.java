@@ -76,7 +76,7 @@ public class ResourceDefender extends BasicGame {
     
     @Override
     public void init(GameContainer container) throws SlickException {
-    	player = new Player(new Image("res/player_right.png"), 70, 92);
+    	player = new Player(new Image("res/player.png"), 70, 92);
     	world = new World();
     	rect = new Rectangle(player.getWidth(), player.getHeight(), player.getX(), player.getY());
     	editor = new LevelEditor();
@@ -103,7 +103,6 @@ public class ResourceDefender extends BasicGame {
     	}
     	player.update(container);
     	checkCollisions();
-    	
     	//world.update(container);
     	
     	
@@ -126,8 +125,8 @@ public class ResourceDefender extends BasicGame {
             AppGameContainer app = new AppGameContainer(new ResourceDefender());
             app.setDisplayMode(width, height, fullscreen);
             app.setTargetFrameRate(60);
-            app.setMaximumLogicUpdateInterval(3);
-            app.setMinimumLogicUpdateInterval(3);
+            app.setMaximumLogicUpdateInterval(17);
+            app.setMinimumLogicUpdateInterval(17);
             app.start();
         
     }
