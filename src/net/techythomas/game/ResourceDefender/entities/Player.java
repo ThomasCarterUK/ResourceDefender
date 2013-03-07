@@ -6,6 +6,7 @@ import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.World;
 import net.techythomas.game.ResourceDefender.controls.Keyboard;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
+import net.techythomas.game.ResourceDefender.projectiles.Projectile;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -49,7 +50,8 @@ public class Player {
 	public boolean isColliding = false;
 	public boolean isOnGround = false;
 	public static boolean hasWeapon = false;
-	public static ArrayList bullets;
+	public static ArrayList<Bullet> bullets;
+	public static ArrayList<Projectile> projectiles;
 	
 	private float gravity = 0.6f;
 	
@@ -59,7 +61,8 @@ public class Player {
 		this.height = height;
 		rect = new Rectangle(x, y, width, height);
 		frameSize = new Rectangle(x, y, width, height);
-		bullets = new ArrayList();
+		bullets = new ArrayList<Bullet>();
+		projectiles = new ArrayList<Projectile>();
 		world = new World();
 		defaultGround = world.getHeight() - (height + 25);
 		ground = defaultGround;
@@ -67,12 +70,16 @@ public class Player {
 		animCount = (int) (sheet.getWidth() / frameSize.getWidth());
 	}
 	
-	public static ArrayList getBullets() {
+	public static ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
 	
-	public static void fire() throws SlickException {
-		Bullet bullet = new Bullet(rect.getX(), rect.getY());
+	public static ArrayList<Projectile> getProjectiles() {
+		return projectiles;
+	}
+	
+	public static void fireBullet() throws SlickException {
+		Bullet bullet = new Bullet(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
 		bullets.add(bullet);
 	}
 	
@@ -139,7 +146,7 @@ public class Player {
 		}
 		if (input.isKeyPressed(input.KEY_SPACE)) {
 			if (hasWeapon) {
-				
+				fireBullet();
 			}
 			
 		}

@@ -30,7 +30,7 @@ public class ResourceDefender extends BasicGame {
 	private World world;
 	private LevelEditor editor;
 	
-	private ArrayList<Bullet> bullets;
+	//private ArrayList<Bullet> bullets;
 
     public ResourceDefender() {
         super("Resource Defender");
@@ -80,8 +80,8 @@ public class ResourceDefender extends BasicGame {
     	world = new World();
     	rect = new Rectangle(player.getWidth(), player.getHeight(), player.getX(), player.getY());
     	editor = new LevelEditor();
-    	bullet = new Bullet(player.getX(), player.getWidth());
-    	bullets = player.getBullets();
+    	bullet = new Bullet(player.getWidth() / 2, player.getHeight() / 2);
+    	//bullets = player.getBullets();
     	container.getInput().addMouseListener(editor);
     	
     	addWalls(world, getClass().getResourceAsStream("walls.txt"));
@@ -93,6 +93,7 @@ public class ResourceDefender extends BasicGame {
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
     	
+    	ArrayList<Bullet> bullets = player.getBullets();
     	for (int w = 0; w < bullets.size(); w++) {
     		Bullet bullet = (Bullet) bullets.get(w);
     		if (bullet.getVisible() == true) {
@@ -112,12 +113,15 @@ public class ResourceDefender extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         world.render(g);
+        
+        ArrayList<Bullet> bullets = player.getBullets();
+        for (int w = 0; w < bullets.size(); w++) {
+        	Bullet bullet = bullets.get(w);
+        	bullet.draw(bullet.getX(), bullet.getY());
+        }
         player.render();
         
-        for (int w = 0; w < bullets.size(); w++) {
-        	Bullet bullet = (Bullet) bullets.get(w);
-        	bullet.draw(50, 30);
-        }
+        
     }
 
     public static void main(String[] args) throws SlickException {
