@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.World;
+import net.techythomas.game.ResourceDefender.controls.Keyboard;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
 import org.newdawn.slick.Animation;
@@ -19,7 +20,7 @@ public class Player {
 	private World world;
 	public static Rectangle rect;
 	protected Rectangle frameSize;
-	private static float width;
+	public static float width;
 	private static float height;
 	public static float defaultGround;
 	public static float ground;
@@ -28,15 +29,16 @@ public class Player {
 	private Image image;
 	private float movementSpeed = 0.25f * 17;
 	protected SpriteSheet sheet;
+	private Keyboard keyboard;
 	
 	private int animIndex;
 	private int animCount;
-	private int animType;
+	public int animType;
 	private int frame = 0;
-	private int ANIM_TYPE_WALKING_FU = 0;
-	private int ANIM_TYPE_WALKING_FD = 1;
-	private int ANIM_TYPE_WALKING_FL = 2;
-	private int ANIM_TYPE_WALKING_FR = 3;
+	public int ANIM_TYPE_WALKING_FU = 0;
+	public int ANIM_TYPE_WALKING_FD = 1;
+	public int ANIM_TYPE_WALKING_FL = 2;
+	public int ANIM_TYPE_WALKING_FR = 3;
 	
 	public static boolean allowMoveUp = true;
 	public boolean allowMoveDown = true;
@@ -84,6 +86,7 @@ public class Player {
 	
 	public void update(GameContainer container) throws SlickException {
 		Input input = container.getInput();
+		keyboard = new Keyboard(container, this);
 		
 		if (y >= defaultGround) {
 			isOnGround = true;
@@ -122,22 +125,10 @@ public class Player {
 			allowMoveRight = true;
 		}
 		
-		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP)) && (y > 20) && allowMoveUp) {
-			setY(y -= movementSpeed);
-			animType = ANIM_TYPE_WALKING_FU;
-		}
-		else if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && (y < ground) && allowMoveDown) {
-			setY(y += movementSpeed);
-			animType = ANIM_TYPE_WALKING_FD;
-		}
-		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (x > 20) && allowMoveLeft) {
-			setX(x -= movementSpeed);
-			animType = ANIM_TYPE_WALKING_FL;
-		}
-		else if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && x < (container.getWidth() - (width + 20)) && allowMoveRight) {
-			setX(x += movementSpeed);
-			animType = ANIM_TYPE_WALKING_FR;
-		}
+		keyboard.up();
+		keyboard.down();
+		keyboard.left();
+		keyboard.right();
 		if (input.isKeyDown(input.KEY_LSHIFT)) {
 			for (int frame = 0; frame < 4; frame++) {
 				image = sheet.getSprite(frame, 1);
