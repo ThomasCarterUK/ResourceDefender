@@ -55,10 +55,11 @@ public class World {
 		background.draw();
 		
 		if(ALLOW_DEBUGGING) {
-			g.setColor(Color.red);
+			g.setColor(Color.blue);
 			g.drawRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
 			
 			for (Rectangle rectangle : walls) {
+				g.setColor(Color.red);
 				g.draw(rectangle);
 				this.rect = rectangle;
 			}

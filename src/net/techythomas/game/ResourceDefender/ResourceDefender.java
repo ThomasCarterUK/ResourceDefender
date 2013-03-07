@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 import net.techythomas.game.ResourceDefender.entities.Player;
+import net.techythomas.game.ResourceDefender.items.ItemResource;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
 import org.newdawn.slick.BasicGame;
@@ -25,6 +27,7 @@ public class ResourceDefender extends BasicGame {
 	
 	private Rectangle rect;
 	private Bullet bullet;
+	private ItemResource resource;
 	
 	private Player player;
 	private World world;
@@ -81,6 +84,7 @@ public class ResourceDefender extends BasicGame {
     	rect = new Rectangle(player.getWidth(), player.getHeight(), player.getX(), player.getY());
     	editor = new LevelEditor();
     	bullet = new Bullet(player.getWidth() / 2, player.getHeight() / 2);
+    	resource = new ItemResource(680, 345);
     	//bullets = player.getBullets();
     	container.getInput().addMouseListener(editor);
     	
@@ -106,7 +110,6 @@ public class ResourceDefender extends BasicGame {
     	checkCollisions();
     	//world.update(container);
     	
-    	
     }
 
     
@@ -119,6 +122,7 @@ public class ResourceDefender extends BasicGame {
         	Bullet bullet = bullets.get(w);
         	bullet.draw(bullet.getX(), bullet.getY());
         }
+        resource.render(g);
         player.render();
         
         
