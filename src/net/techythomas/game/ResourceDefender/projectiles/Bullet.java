@@ -1,5 +1,7 @@
 package net.techythomas.game.ResourceDefender.projectiles;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -26,6 +28,11 @@ public class Bullet {
 		image.draw(x, y);
 	}
 	
+	public void drawFlipped(GameContainer container, float x, float y) {
+		Graphics g = container.getGraphics();
+		g.drawImage(image.getFlippedCopy(true, false), x, y);
+	}
+	
 	
 	public float getX() {
 		return x;
@@ -41,7 +48,9 @@ public class Bullet {
 
 	public void update() {
 		x += bulletSpeed;
-		
+		if (x > 1280) {
+			isVisible = false;
+		}
 	}
 
 }
