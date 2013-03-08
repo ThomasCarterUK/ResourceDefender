@@ -12,9 +12,11 @@ import net.techythomas.game.ResourceDefender.items.ItemResource;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.geom.Rectangle;
@@ -28,6 +30,8 @@ public class ResourceDefender extends BasicGame {
 	private Rectangle rect;
 	private Bullet bullet;
 	private ItemResource resource;
+	private int RESOURCE_COUNT = 0;
+	private String RESOURCE_STRING = "Resources: ";
 	
 	private Player player;
 	private World world;
@@ -57,6 +61,13 @@ public class ResourceDefender extends BasicGame {
 			player.isColliding = false;
 		}
 		
+		for (int i = 0; i < world.resources.size(); i++) {
+    		Rectangle r = (Rectangle) world.resources.get(i);
+    		if (player.getBounds().intersects(r)) {
+    			world.resources.remove(i);
+    			RESOURCE_COUNT += 1;
+    		}
+    	}
 	}
     
     public void addWalls (World world, InputStream stream) {
@@ -77,6 +88,24 @@ public class ResourceDefender extends BasicGame {
     	}
     }
     
+    public void addResources (World world, InputStream stream) {
+    	BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    	String line;
+    	
+    	try {
+    		while ((line = reader.readLine()) != null) {
+    			if (line.startsWith("#") || line.trim().length() < 1) continue;
+    			String[] coords = line.split(" ", 2);
+    			Rectangle rect = new Rectangle(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), 32, 32);
+    			world.addResources(rect);
+    		}
+    	}
+    	catch (IOException e) {
+    		System.out.println("Couldn't load resource items!");
+    		e.printStackTrace();
+    	}
+    }
+    
     @Override
     public void init(GameContainer container) throws SlickException {
     	player = new Player(new Image("res/player.png"), 70, 92);
@@ -84,11 +113,12 @@ public class ResourceDefender extends BasicGame {
     	rect = new Rectangle(player.getWidth(), player.getHeight(), player.getX(), player.getY());
     	editor = new LevelEditor();
     	bullet = new Bullet(player.getWidth() / 2, player.getHeight() / 2);
-    	resource = new ItemResource(680, 345);
+    	
     	//bullets = player.getBullets();
     	container.getInput().addMouseListener(editor);
     	
     	addWalls(world, getClass().getResourceAsStream("walls.txt"));
+    	addResources(world, getClass().getResourceAsStream("resources.txt"));
     	
     	//BufferedReader reader = new BufferedReader("res/collisions.txt");
     	//reader.readLine();
@@ -110,6 +140,14 @@ public class ResourceDefender extends BasicGame {
     	checkCollisions();
     	//world.update(container);
     	
+    	Input input= container.getInput();
+    	if (world.allowDebugging()) {
+    		if (input.isKeyDown(input.KEY_R)) {
+    			world.resources.clear();
+    			addResources(world, getClass().getResourceAsStream("resources.txt"));
+    			RESOURCE_COUNT = 0;
+			}
+    	}
     }
 
     
@@ -122,10 +160,11 @@ public class ResourceDefender extends BasicGame {
         	Bullet bullet = bullets.get(w);
         	bullet.draw(bullet.getX(), bullet.getY());
         }
-        resource.render(g);
+        
         player.render();
         
-        
+        g.setColor(Color.white);
+        g.drawString(RESOURCE_STRING + RESOURCE_COUNT, 5, 5);
     }
 
     public static void main(String[] args) throws SlickException {
@@ -133,6 +172,7 @@ public class ResourceDefender extends BasicGame {
             AppGameContainer app = new AppGameContainer(new ResourceDefender());
             app.setDisplayMode(width, height, fullscreen);
             app.setTargetFrameRate(60);
+            app.setShowFPS(false);
             app.setMaximumLogicUpdateInterval(17);
             app.setMinimumLogicUpdateInterval(17);
             app.start();

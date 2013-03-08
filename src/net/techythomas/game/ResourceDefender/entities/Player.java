@@ -59,7 +59,7 @@ public class Player {
 		this.image = image;
 		this.width = width;
 		this.height = height;
-		rect = new Rectangle(x, y, width, height);
+		rect = new Rectangle(x + 10, y + 10, width - 20, height - 20);
 		frameSize = new Rectangle(x, y, width, height);
 		bullets = new ArrayList<Bullet>();
 		projectiles = new ArrayList<Projectile>();
@@ -84,7 +84,7 @@ public class Player {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, width, height);
+		return new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 	
 	public void Animation(SpriteSheet frames, int duration) {
@@ -136,21 +136,14 @@ public class Player {
 		keyboard.down();
 		keyboard.left();
 		keyboard.right();
-		if (input.isKeyDown(input.KEY_LSHIFT)) {
-			for (int frame = 0; frame < 4; frame++) {
-				image = sheet.getSprite(frame, 1);
-			}
-		}
-		else {
-			
-		}
+		
 		if (input.isKeyPressed(input.KEY_SPACE)) {
 			if (hasWeapon) {
 				fireBullet();
 			}
 			
 		}
-		
+
 	}
 	
 	public static void setAllowMoveUp(boolean bool) {
@@ -178,11 +171,11 @@ public class Player {
 	}
 	
 	public static void setX(float x) {
-		rect.setX(x);
+		rect.setX(x + 10);
 	}
 	
 	public static void setY(float y) {
-		rect.setY(y);
+		rect.setY(y + 10);
 	}
 	
 	public void render() throws SlickException {

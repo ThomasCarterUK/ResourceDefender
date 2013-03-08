@@ -14,24 +14,24 @@ public class ItemResource {
 	private Rectangle rect;
 	
 	public ItemResource(float x, float y) throws SlickException {
-		this.x = x;
-		this.y = y;
 		this.texture = new Image("res/items/resource.png");
 		this.rect = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
 	}
 	
-	public void render(Graphics g) {
-		texture.draw(x, y);
-		g.setColor(Color.blue);
-		g.draw(rect);
+	public void render() {
+		texture.draw(rect.getX(), rect.getY());
+	}
+	
+	public Rectangle getBounds() {
+		return rect;
 	}
 	
 	public void setX(float x) {
-		this.x = x;
+		rect.setX(x);
 	}
 	
 	public void setY(float y) {
-		this.y = y;
+		rect.setY(y);
 	}
 
 }
