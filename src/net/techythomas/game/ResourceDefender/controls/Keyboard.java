@@ -4,6 +4,7 @@ import net.techythomas.game.ResourceDefender.entities.Player;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 public class Keyboard {
 	
@@ -44,6 +45,24 @@ public class Keyboard {
 				(container.getWidth() - (player.width + 20)) && player.allowMoveRight) {
 			player.setX(player.x += movementSpeed);
 			player.animType = player.ANIM_TYPE_WALKING_FR;
+		}
+	}
+	
+	public void ctrl() {
+		if (input.isKeyDown(input.KEY_LCONTROL)) {
+			if (player.animType == player.ANIM_TYPE_WALKING_FU) player.setY(player.y -=20);
+			if (player.animType == player.ANIM_TYPE_WALKING_FD) player.setY(player.y += 20);
+			if (player.animType == player.ANIM_TYPE_WALKING_FL) player.setX(player.x -= 20);
+			if (player.animType == player.ANIM_TYPE_WALKING_FR) player.setX(player.x += 20);
+		}
+	}
+	
+	public void space() throws SlickException {
+		if (input.isKeyPressed(input.KEY_SPACE)) {
+			if (player.hasWeapon) {
+				player.fireBullet();
+			}
+			
 		}
 	}
 

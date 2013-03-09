@@ -49,7 +49,7 @@ public class Player {
 	public static boolean isJumping  = false;
 	public boolean isColliding = false;
 	public boolean isOnGround = false;
-	public static boolean hasWeapon = false;
+	public static boolean hasWeapon = true;
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Projectile> projectiles;
 	
@@ -124,6 +124,7 @@ public class Player {
 			else if (animType == ANIM_TYPE_WALKING_FR) {
 				allowMoveRight = false;
 			}
+			keyboard.ctrl();
 		}
 		else {
 			allowMoveUp = true;
@@ -136,13 +137,7 @@ public class Player {
 		keyboard.down();
 		keyboard.left();
 		keyboard.right();
-		
-		if (input.isKeyPressed(input.KEY_SPACE)) {
-			if (hasWeapon) {
-				fireBullet();
-			}
-			
-		}
+		keyboard.space();
 
 	}
 	
