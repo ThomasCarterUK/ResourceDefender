@@ -2,13 +2,12 @@ package net.techythomas.game.ResourceDefender.entities;
 
 import java.util.ArrayList;
 
-import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.World;
 import net.techythomas.game.ResourceDefender.controls.Keyboard;
+import net.techythomas.game.ResourceDefender.gui.Inventory;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 import net.techythomas.game.ResourceDefender.projectiles.Projectile;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -31,6 +30,7 @@ public class Player {
 	private float movementSpeed = 0.25f * 17;
 	protected SpriteSheet sheet;
 	private Keyboard keyboard;
+	public Inventory inventory;
 	
 	private int animIndex;
 	private int animCount;
@@ -50,7 +50,7 @@ public class Player {
 	public boolean isColliding = false;
 	public boolean isOnGround = false;
 	public boolean isInWorkbenchRadius = false;
-	public static boolean hasWeapon = true;
+	public static boolean hasWeapon = false;
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Projectile> projectiles;
 	
@@ -69,6 +69,7 @@ public class Player {
 		ground = defaultGround;
 		sheet = new SpriteSheet(new Image("res/spritesheets/player.png"), 70, 92);
 		animCount = (int) (sheet.getWidth() / frameSize.getWidth());
+		inventory = new Inventory(20);
 	}
 	
 	public static ArrayList<Bullet> getBullets() {
@@ -139,6 +140,7 @@ public class Player {
 		keyboard.left();
 		keyboard.right();
 		keyboard.space();
+		keyboard.q();
 
 	}
 	

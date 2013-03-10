@@ -1,6 +1,8 @@
 package net.techythomas.game.ResourceDefender.controls;
 
+import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.entities.Player;
+import net.techythomas.game.ResourceDefender.items.ItemGun;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -48,9 +50,25 @@ public class Keyboard {
 		}
 	}
 	
-	public void e() {
-		if (input.isKeyPressed(input.KEY_E) && player.isInWorkbenchRadius) {
-			System.out.println("Crafting");
+	public void e(ResourceDefender game) throws SlickException {
+		if (player.isInWorkbenchRadius) {
+			if (input.isKeyPressed(input.KEY_E)) {
+				if (game.RESOURCE_COUNT >= 10) {
+					ItemGun gun = new ItemGun();
+					player.inventory.add(gun);
+					game.RESOURCE_COUNT -= 10;
+					player.hasWeapon = true;
+				}
+				System.out.println("Crafting");
+			}
+		}
+	}
+	
+	public void q() throws SlickException {
+		if (input.isKeyPressed(input.KEY_Q)) {
+			if (player.inventory.getItems() > 0) {
+				System.out.println(player.inventory.get(0));
+			}
 		}
 	}
 	

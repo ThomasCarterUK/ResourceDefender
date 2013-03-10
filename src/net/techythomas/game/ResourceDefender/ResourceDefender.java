@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import net.techythomas.game.ResourceDefender.controls.Keyboard;
 import net.techythomas.game.ResourceDefender.entities.Player;
+import net.techythomas.game.ResourceDefender.items.ItemGun;
 import net.techythomas.game.ResourceDefender.items.ItemResource;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
@@ -30,7 +31,7 @@ public class ResourceDefender extends BasicGame {
 	private Rectangle rect;
 	private Bullet bullet;
 	private ItemResource resource;
-	private int RESOURCE_COUNT = 0;
+	public int RESOURCE_COUNT = 0;
 	private String RESOURCE_STRING = "Resources: ";
 	
 	private Player player;
@@ -72,7 +73,7 @@ public class ResourceDefender extends BasicGame {
 		
 		if (player.getBounds().intersects(world.workbench.getBounds())) {
 			player.isInWorkbenchRadius = true;
-			keyboard.e();
+			keyboard.e(this);
 		}
 		else {
 			player.isInWorkbenchRadius = false;
