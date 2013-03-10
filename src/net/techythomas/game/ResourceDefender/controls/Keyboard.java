@@ -48,6 +48,12 @@ public class Keyboard {
 		}
 	}
 	
+	public void e() {
+		if (input.isKeyPressed(input.KEY_E) && player.isInWorkbenchRadius) {
+			System.out.println("Crafting");
+		}
+	}
+	
 	public void ctrl() {
 		if (input.isKeyDown(input.KEY_LCONTROL)) {
 			if (player.animType == player.ANIM_TYPE_WALKING_FU) player.setY(player.y -=20);

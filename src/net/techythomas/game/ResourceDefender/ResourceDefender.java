@@ -5,12 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Random;
 
+import net.techythomas.game.ResourceDefender.controls.Keyboard;
 import net.techythomas.game.ResourceDefender.entities.Player;
 import net.techythomas.game.ResourceDefender.items.ItemResource;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -18,7 +19,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.geom.Rectangle;
 
 public class ResourceDefender extends BasicGame {
@@ -36,6 +36,7 @@ public class ResourceDefender extends BasicGame {
 	private Player player;
 	private World world;
 	private LevelEditor editor;
+	private Keyboard keyboard;
 	
 	//private ArrayList<Bullet> bullets;
 
@@ -68,6 +69,14 @@ public class ResourceDefender extends BasicGame {
     			RESOURCE_COUNT += 1;
     		}
     	}
+		
+		if (player.getBounds().intersects(world.workbench.getBounds())) {
+			player.isInWorkbenchRadius = true;
+			keyboard.e();
+		}
+		else {
+			player.isInWorkbenchRadius = false;
+		}
 	}
     
     public void addWalls (World world, InputStream stream) {
@@ -113,6 +122,7 @@ public class ResourceDefender extends BasicGame {
     	rect = new Rectangle(player.getWidth(), player.getHeight(), player.getX(), player.getY());
     	editor = new LevelEditor();
     	bullet = new Bullet(player.getWidth() / 2, player.getHeight() / 2);
+    	keyboard = new Keyboard(container, player);
     	
     	//bullets = player.getBullets();
     	container.getInput().addMouseListener(editor);

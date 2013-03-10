@@ -49,6 +49,7 @@ public class Player {
 	public static boolean isJumping  = false;
 	public boolean isColliding = false;
 	public boolean isOnGround = false;
+	public boolean isInWorkbenchRadius = false;
 	public static boolean hasWeapon = true;
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Projectile> projectiles;

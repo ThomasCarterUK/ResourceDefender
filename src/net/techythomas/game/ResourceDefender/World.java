@@ -14,7 +14,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import net.techythomas.game.ResourceDefender.entities.Player;
-import net.techythomas.game.ResourceDefender.items.ItemResource;
+import net.techythomas.game.ResourceDefender.items.*;
 
 public class World {
 	
@@ -26,6 +26,7 @@ public class World {
 	private float width = 1280;
 	
 	private ItemResource resource;
+	public Workbench workbench;
 	
 	public boolean allowMoveUp = true;
 	
@@ -40,6 +41,7 @@ public class World {
 		walls = new ArrayList<Rectangle>();
 		resource = new ItemResource(0, 0);
 		resources = new ArrayList<Rectangle>();
+		workbench = new Workbench(1128, 373);
 	}
 	
 	public boolean allowDebugging() {
@@ -94,6 +96,8 @@ public class World {
 		if(ALLOW_DEBUGGING) {
 			g.setColor(Color.blue);
 			g.drawRect(player.rect.getX(), player.rect.getY(), player.rect.getWidth(), player.rect.getHeight());
+			g.setColor(Color.magenta);
+			g.draw(workbench.getBounds());
 		}
 			
 			for (Rectangle rectangle : walls) {
@@ -112,6 +116,7 @@ public class World {
 				Image texture = new Image("res/items/resource.png");
 				texture.draw(rectangle.getX(), rectangle.getY());
 			}
-			
+			workbench.render();
 		}
+	
 	}
