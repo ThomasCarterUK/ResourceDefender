@@ -153,7 +153,7 @@ public class ResourceDefender extends BasicGame {
     	
     	Input input= container.getInput();
     	if (world.allowDebugging()) {
-    		if (input.isKeyDown(input.KEY_R)) {
+    		if (input.isKeyDown(input.KEY_F5)) {
     			world.resources.clear();
     			addResources(world, getClass().getResourceAsStream("resources.txt"));
     			RESOURCE_COUNT = 0;

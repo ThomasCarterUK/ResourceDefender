@@ -15,7 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Player {
+public class Player extends Entity {
 	
 	private World world;
 	public static Rectangle rect;
@@ -27,7 +27,7 @@ public class Player {
 	public static float x = 30;
 	public static float y = 30 ;
 	private Image image;
-	private float movementSpeed = 0.25f * 17;
+	public float movementSpeed = 0.25f * 17;
 	protected SpriteSheet sheet;
 	private Keyboard keyboard;
 	public Inventory inventory;
@@ -57,9 +57,7 @@ public class Player {
 	private float gravity = 0.6f;
 	
 	public Player(Image image, float width, float height) throws SlickException {
-		this.image = image;
-		this.width = width;
-		this.height = height;
+		super(image, width, height);
 		rect = new Rectangle(x + 10, y + 10, width - 20, height - 20);
 		frameSize = new Rectangle(x, y, width, height);
 		bullets = new ArrayList<Bullet>();
@@ -94,7 +92,6 @@ public class Player {
 	}
 	
 	public void update(GameContainer container) throws SlickException {
-		Input input = container.getInput();
 		keyboard = new Keyboard(container, this);
 		
 		if (y >= defaultGround) {
@@ -141,7 +138,6 @@ public class Player {
 		keyboard.right();
 		keyboard.space();
 		keyboard.q();
-
 	}
 	
 	public static void setAllowMoveUp(boolean bool) {

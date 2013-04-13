@@ -29,7 +29,11 @@ public class Inventory {
 		return items.get(index).getName();
 	}
 	
-	public int getItems() {
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+	
+	public int getNumberOfItems() {
 		return items.size();
 	}
 	

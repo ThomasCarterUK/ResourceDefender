@@ -2,7 +2,9 @@ package net.techythomas.game.ResourceDefender.controls;
 
 import net.techythomas.game.ResourceDefender.ResourceDefender;
 import net.techythomas.game.ResourceDefender.entities.Player;
+import net.techythomas.game.ResourceDefender.items.Item;
 import net.techythomas.game.ResourceDefender.items.ItemGun;
+import net.techythomas.game.ResourceDefender.items.ItemSword;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -12,7 +14,7 @@ public class Keyboard {
 	
 	private Player player;
 	private Input input;
-	private float movementSpeed = 0.25f * 17;
+	private float movementSpeed = 0.35f * 17;
 	private GameContainer container;
 	
 	public Keyboard(GameContainer container, Player player) {
@@ -22,42 +24,44 @@ public class Keyboard {
 	}
 	
 	public void up() {
-		if ((input.isKeyDown(input.KEY_W) || input.isKeyDown(input.KEY_UP)) && (player.y > 20) && player.allowMoveUp) {
-			player.setY(player.y -= movementSpeed);
+		if ((input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_UP)) && (Player.y > 20) && Player.allowMoveUp) {
+			Player.setY(Player.y -= movementSpeed);
 			player.animType = player.ANIM_TYPE_WALKING_FU;
 		}
 	}
 	
 	public void down() {
-		if ((input.isKeyDown(input.KEY_S) || input.isKeyDown(input.KEY_DOWN)) && (player.y < player.ground) && player.allowMoveDown) {
-			player.setY(player.y += movementSpeed);
+		if ((input.isKeyDown(Input.KEY_S) || input.isKeyDown(Input.KEY_DOWN)) && (Player.y < Player.ground) && player.allowMoveDown) {
+			Player.setY(Player.y += movementSpeed);
 			player.animType = player.ANIM_TYPE_WALKING_FD;
 		}
 	}
 	
 	public void left() {
-		if ((input.isKeyDown(input.KEY_A) || input.isKeyDown(input.KEY_LEFT)) && (player.x > 20) && player.allowMoveLeft) {
-			player.setX(player.x -= movementSpeed);
+		if ((input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT)) && (Player.x > 20) && player.allowMoveLeft) {
+			Player.setX(Player.x -= movementSpeed);
 			player.animType = player.ANIM_TYPE_WALKING_FL;
 		}
 	}
 	
 	public void right() {
-		if ((input.isKeyDown(input.KEY_D) || input.isKeyDown(input.KEY_RIGHT)) && player.x < 
-				(container.getWidth() - (player.width + 20)) && player.allowMoveRight) {
-			player.setX(player.x += movementSpeed);
+		if ((input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT)) && Player.x < 
+				(container.getWidth() - (Player.width + 20)) && player.allowMoveRight) {
+			Player.setX(Player.x += movementSpeed);
 			player.animType = player.ANIM_TYPE_WALKING_FR;
 		}
 	}
 	
 	public void e(ResourceDefender game) throws SlickException {
 		if (player.isInWorkbenchRadius) {
-			if (input.isKeyPressed(input.KEY_E)) {
+			if (input.isKeyPressed(Input.KEY_E)) {
 				if (game.RESOURCE_COUNT >= 10) {
 					ItemGun gun = new ItemGun();
+					ItemSword sword = new ItemSword();
 					player.inventory.add(gun);
+					player.inventory.add(sword);
 					game.RESOURCE_COUNT -= 10;
-					player.hasWeapon = true;
+					Player.hasWeapon = true;
 				}
 				System.out.println("Crafting");
 			}
@@ -65,26 +69,28 @@ public class Keyboard {
 	}
 	
 	public void q() throws SlickException {
-		if (input.isKeyPressed(input.KEY_Q)) {
-			if (player.inventory.getItems() > 0) {
-				System.out.println(player.inventory.get(0));
+		if (input.isKeyPressed(Input.KEY_Q)) {
+			if (player.inventory.getNumberOfItems() > 0) {
+				for (Item item : player.inventory.getItems()) {
+					System.out.println(item.getName());
+				}
 			}
 		}
 	}
 	
 	public void ctrl() {
-		if (input.isKeyDown(input.KEY_LCONTROL)) {
-			if (player.animType == player.ANIM_TYPE_WALKING_FU) player.setY(player.y -=20);
-			if (player.animType == player.ANIM_TYPE_WALKING_FD) player.setY(player.y += 20);
-			if (player.animType == player.ANIM_TYPE_WALKING_FL) player.setX(player.x -= 20);
-			if (player.animType == player.ANIM_TYPE_WALKING_FR) player.setX(player.x += 20);
+		if (input.isKeyDown(Input.KEY_LCONTROL)) {
+			if (player.animType == player.ANIM_TYPE_WALKING_FU) Player.setY(Player.y -=20);
+			if (player.animType == player.ANIM_TYPE_WALKING_FD) Player.setY(Player.y += 20);
+			if (player.animType == player.ANIM_TYPE_WALKING_FL) Player.setX(Player.x -= 20);
+			if (player.animType == player.ANIM_TYPE_WALKING_FR) Player.setX(Player.x += 20);
 		}
 	}
 	
 	public void space() throws SlickException {
-		if (input.isKeyPressed(input.KEY_SPACE)) {
-			if (player.hasWeapon) {
-				player.fireBullet();
+		if (input.isKeyPressed(Input.KEY_SPACE)) {
+			if (Player.hasWeapon) {
+				Player.fireBullet();
 			}
 			
 		}
