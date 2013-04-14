@@ -172,7 +172,7 @@ public class ResourceDefender extends BasicGame {
     			//world.removeItem(new ItemGun());
     			//player.inventory.remove(new ItemGun());
     			addResources(world, getClass().getResourceAsStream("resources.txt"));
-    			world.addItem(new ItemGun(), new Point(677, 369));
+    			//world.addItem(new ItemGun(), new Point(677, 369));
     			RESOURCE_COUNT = 0;
 			}
     	}
