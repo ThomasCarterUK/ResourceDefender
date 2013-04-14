@@ -25,6 +25,11 @@ public class Inventory {
 		}
 	}
 	
+	public void remove(Item item) {
+		items.remove(item);
+		System.out.println(item.getName() + " was removed from your inventory");
+	}
+	
 	public String get(int index) throws SlickException {
 		return items.get(index).getName();
 	}

@@ -20,6 +20,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 public class ResourceDefender extends BasicGame {
@@ -78,6 +79,17 @@ public class ResourceDefender extends BasicGame {
 		else {
 			player.isInWorkbenchRadius = false;
 		}
+		
+		for (int i = 0; i < world.getItems().size(); i++) {
+			if (player.getBounds().intersects(world.getCollidedItemBounds())) {
+				world.removeItem(world.getCollidedItem());
+				player.inventory.add(world.getCollidedItem());
+				if (world.getCollidedItem().getName() == "Gun") {
+					player.hasWeapon = true;
+				}
+			}
+		}
+		
 	}
     
     public void addWalls (World world, InputStream stream) {
@@ -130,6 +142,8 @@ public class ResourceDefender extends BasicGame {
     	
     	addWalls(world, getClass().getResourceAsStream("walls.txt"));
     	addResources(world, getClass().getResourceAsStream("resources.txt"));
+    	world.addItem(new ItemGun(), new Point(677, 369));
+    	
     	
     	//BufferedReader reader = new BufferedReader("res/collisions.txt");
     	//reader.readLine();
@@ -153,11 +167,18 @@ public class ResourceDefender extends BasicGame {
     	
     	Input input= container.getInput();
     	if (world.allowDebugging()) {
-    		if (input.isKeyDown(input.KEY_F5)) {
+    		if (input.isKeyDown(Input.KEY_F5)) {
     			world.resources.clear();
+    			//world.removeItem(new ItemGun());
+    			//player.inventory.remove(new ItemGun());
     			addResources(world, getClass().getResourceAsStream("resources.txt"));
+    			world.addItem(new ItemGun(), new Point(677, 369));
     			RESOURCE_COUNT = 0;
 			}
+    	}
+    	if (input.isKeyPressed(Input.KEY_F4)) {
+    		if (world.allowDebugging() == false) world.setDebugging(true);
+    		else if (world.allowDebugging() == true) world.setDebugging(false);
     	}
     }
 
@@ -165,6 +186,8 @@ public class ResourceDefender extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         world.render(g);
+        world.renderItems();
+        
         
         ArrayList<Bullet> bullets = player.getBullets();
         for (int w = 0; w < bullets.size(); w++) {

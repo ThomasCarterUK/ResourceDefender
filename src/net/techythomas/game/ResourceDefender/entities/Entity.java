@@ -12,6 +12,20 @@ public class Entity {
 	private Image texture;
 	protected SpriteSheet sheet;
 	
+	private int animIndex;
+	private int animCount;
+	public int animType;
+	private int frame = 0;
+	public int ANIM_TYPE_WALKING_FU = 0;
+	public int ANIM_TYPE_WALKING_FD = 1;
+	public int ANIM_TYPE_WALKING_FL = 2;
+	public int ANIM_TYPE_WALKING_FR = 3;
+	
+	public static boolean allowMoveUp = true;
+	public boolean allowMoveDown = true;
+	public boolean allowMoveRight = true;
+	public boolean allowMoveLeft = true;
+	
 	public Entity(Image image, float width, float height) {
 		this.texture = image;
 		this.width = width;

@@ -87,10 +87,6 @@ public class Player extends Entity {
 		return new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
 	
-	public void Animation(SpriteSheet frames, int duration) {
-		
-	}
-	
 	public void update(GameContainer container) throws SlickException {
 		keyboard = new Keyboard(container, this);
 		

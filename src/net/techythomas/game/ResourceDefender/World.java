@@ -11,6 +11,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import net.techythomas.game.ResourceDefender.entities.Player;
@@ -21,7 +22,7 @@ public class World {
 	private float gravity = 0.7f;
 	private Player player;
 	private Image background;
-	private boolean ALLOW_DEBUGGING = true;
+	private boolean ALLOW_DEBUGGING = false;
 	private float height = 720;
 	private float width = 1280;
 	
@@ -32,20 +33,30 @@ public class World {
 	
 	public Rectangle rect;
 	public Rectangle rect2;
+	public Rectangle rect3;
+	
+	private Item item;
+	private String itemName;
 	
 	public ArrayList<Rectangle> walls;
 	public ArrayList<Rectangle> resources;
+	public ArrayList<Item> worldItems;
 	
 	public World() throws SlickException {
 		background = new Image("res/background.png");
 		walls = new ArrayList<Rectangle>();
 		resource = new ItemResource(0, 0);
 		resources = new ArrayList<Rectangle>();
+		worldItems = new ArrayList<Item>();
 		workbench = new Workbench(1128, 373);
 	}
 	
 	public boolean allowDebugging() {
 		return ALLOW_DEBUGGING;
+	}
+	
+	public void setDebugging(Boolean bool) {
+		ALLOW_DEBUGGING = bool;
 	}
 	
 	public Rectangle getWallBounds() {
@@ -54,6 +65,14 @@ public class World {
 	
 	public Rectangle getResourceBounds() {
 		return new Rectangle(rect2.getX(), rect2.getY(), rect2.getWidth(), rect2.getHeight());
+	}
+	
+	public Rectangle getCollidedItemBounds() {
+		return rect3;
+	}
+	
+	public Item getCollidedItem() {
+		return item;
 	}
 	
 	public void addWalls(Rectangle rectangle) {
@@ -82,6 +101,30 @@ public class World {
     	}
     }
 	
+	public void addItem(Item item, Point point) {
+		worldItems.add(item);
+		item.setLocation(point);
+		this.item = item;
+	}
+	
+	public void removeItem(Item item) {
+		worldItems.remove(item);
+	}
+	
+	public void renderItems() {
+		for (Item item : worldItems) {
+			item.render();
+		}
+	}
+	
+	public ArrayList<Item> getItems() {
+		return worldItems;
+	}
+	
+	public String getItemName() {
+		return itemName;
+	}
+	
 	public float getHeight() {
 		return height;
 	}
@@ -92,6 +135,8 @@ public class World {
 	
 	public void render(Graphics g) throws SlickException {
 		background.draw();
+		renderItems();
+		workbench.render();
 		
 		if(ALLOW_DEBUGGING) {
 			g.setColor(Color.blue);
@@ -116,7 +161,15 @@ public class World {
 				Image texture = new Image("res/items/resource.png");
 				texture.draw(rectangle.getX(), rectangle.getY());
 			}
-			workbench.render();
+			for (Item item : worldItems) {
+				if (ALLOW_DEBUGGING) {
+					g.setColor(Color.black);
+					g.drawRect(item.getLocation().getX(), item.getLocation().getY(), item.getWidth(), item.getHeight());
+				}
+				this.rect3 = new Rectangle(item.getLocation().getX(), item.getLocation().getY(), item.getWidth(), item.getHeight());
+				this.itemName = item.getName();
+			}
+			
 		}
 	
 	}

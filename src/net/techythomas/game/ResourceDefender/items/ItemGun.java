@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 public class ItemGun extends Item{
 	
 	public ItemGun() throws SlickException {
-		super(new Image("res/items/resource.png"), "Gun");
+		super(new Image("res/items/gun.png"), "Gun");
 	}
 
 }
