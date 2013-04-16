@@ -11,7 +11,8 @@ public class Bullet {
 	public float x;
 	private float y;
 	private boolean isVisible;
-	private float bulletSpeed = 0.5f * 17;
+	private float bulletSpeed = 0.35f * 17;
+	private ProjectileDirection bulletDirection;
 	
 	public Bullet(float x, float y) throws SlickException {
 		image = new Image("res/bullet.png");
@@ -45,11 +46,28 @@ public class Bullet {
 	public boolean getVisible() {
 		return isVisible;
 	}
+	
+	public void setBulletDirection(ProjectileDirection direction) {
+		this.bulletDirection = direction;
+	}
 
 	public void update() {
 		x += bulletSpeed;
 		if (x > 1280) {
 			isVisible = false;
+		}
+		
+		if (bulletDirection == ProjectileDirection.LEFT) {
+			x -= bulletSpeed;
+			//if (x < 0 - image.getWidth()) {
+				//isVisible = false;
+			//}
+		}
+		if (bulletDirection == ProjectileDirection.RIGHT) {
+			x += bulletSpeed;
+			if (x > 1280) {
+				isVisible = false;
+			}
 		}
 	}
 

@@ -11,6 +11,7 @@ import net.techythomas.game.ResourceDefender.entities.Player;
 import net.techythomas.game.ResourceDefender.items.ItemGun;
 import net.techythomas.game.ResourceDefender.items.ItemResource;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
+import net.techythomas.game.ResourceDefender.text.TextScreen;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -39,6 +40,7 @@ public class ResourceDefender extends BasicGame {
 	private World world;
 	private LevelEditor editor;
 	private Keyboard keyboard;
+	private TextScreen textScreen;
 	
 	//private ArrayList<Bullet> bullets;
 
@@ -136,6 +138,7 @@ public class ResourceDefender extends BasicGame {
     	editor = new LevelEditor();
     	bullet = new Bullet(player.getWidth() / 2, player.getHeight() / 2);
     	keyboard = new Keyboard(container, player);
+    	textScreen = new TextScreen();
     	
     	//bullets = player.getBullets();
     	container.getInput().addMouseListener(editor);
@@ -199,6 +202,7 @@ public class ResourceDefender extends BasicGame {
         
         g.setColor(Color.white);
         g.drawString(RESOURCE_STRING + RESOURCE_COUNT, 5, 5);
+        textScreen.render(container);
     }
 
     public static void main(String[] args) throws SlickException {

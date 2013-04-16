@@ -5,6 +5,7 @@ import net.techythomas.game.ResourceDefender.entities.Player;
 import net.techythomas.game.ResourceDefender.items.Item;
 import net.techythomas.game.ResourceDefender.items.ItemGun;
 import net.techythomas.game.ResourceDefender.items.ItemSword;
+import net.techythomas.game.ResourceDefender.projectiles.ProjectileDirection;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -89,10 +90,14 @@ public class Keyboard {
 	
 	public void space() throws SlickException {
 		if (input.isKeyPressed(Input.KEY_SPACE)) {
-			if (Player.hasWeapon) {
-				Player.fireBullet();
+			if (player.hasWeapon) {
+				if (player.animType == player.ANIM_TYPE_WALKING_FL) {
+					player.fireBullet(ProjectileDirection.LEFT);
+				}
+				if (player.animType == player.ANIM_TYPE_WALKING_FR) {
+					player.fireBullet(ProjectileDirection.RIGHT);
+				}
 			}
-			
 		}
 	}
 

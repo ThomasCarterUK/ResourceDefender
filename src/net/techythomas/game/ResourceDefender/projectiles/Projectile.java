@@ -34,7 +34,11 @@ public class Projectile {
 		return isVisible;
 	}
 	
-	public void update() {
+	public void fireLeft() {
+		x -= projectileSpeed;
+	}
+	
+	public void fireRight() {
 		x += projectileSpeed;
 	}
 

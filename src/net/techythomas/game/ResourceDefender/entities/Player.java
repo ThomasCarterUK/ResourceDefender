@@ -7,10 +7,10 @@ import net.techythomas.game.ResourceDefender.controls.Keyboard;
 import net.techythomas.game.ResourceDefender.gui.Inventory;
 import net.techythomas.game.ResourceDefender.projectiles.Bullet;
 import net.techythomas.game.ResourceDefender.projectiles.Projectile;
+import net.techythomas.game.ResourceDefender.projectiles.ProjectileDirection;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
@@ -78,9 +78,10 @@ public class Player extends Entity {
 		return projectiles;
 	}
 	
-	public static void fireBullet() throws SlickException {
+	public static void fireBullet(ProjectileDirection direction) throws SlickException {
 		Bullet bullet = new Bullet(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
 		bullets.add(bullet);
+		bullet.setBulletDirection(direction);
 	}
 	
 	public Rectangle getBounds() {
