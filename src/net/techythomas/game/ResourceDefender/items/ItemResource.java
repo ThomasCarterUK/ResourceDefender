@@ -1,5 +1,8 @@
 package net.techythomas.game.ResourceDefender.items;
 
+import net.techythomas.game.ResourceDefender.ResourceDefender;
+
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;

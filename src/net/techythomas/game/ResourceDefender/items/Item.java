@@ -1,5 +1,6 @@
 package net.techythomas.game.ResourceDefender.items;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
@@ -34,8 +35,9 @@ public class Item {
 		return texture.getHeight();
 	}
 	
-	public void render() {
-		texture.draw(location.getX(), location.getY(), texture.getWidth(), texture.getHeight());
+	public void render(GameContainer container) {
+		float yBobbing = (float) Math.sin(container.getTime() / 1000f * 6);
+		texture.draw(location.getX(), location.getY() + yBobbing, texture.getWidth(), texture.getHeight());
 	}
 
 }

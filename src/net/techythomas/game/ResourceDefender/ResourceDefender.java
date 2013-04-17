@@ -29,6 +29,7 @@ public class ResourceDefender extends BasicGame {
 	private static int width = 1280;
 	private static int height = 720;
 	private static boolean fullscreen = false;
+	private static float gameTime = 0;
 	
 	private Rectangle rect;
 	private Bullet bullet;
@@ -46,6 +47,10 @@ public class ResourceDefender extends BasicGame {
 
     public ResourceDefender() {
         super("Resource Defender");
+    }
+    
+    public static float getTime() {
+    	return gameTime;
     }
     
     public boolean collidingWithWall() throws SlickException {
@@ -189,8 +194,9 @@ public class ResourceDefender extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         world.render(g);
-        world.renderItems();
+        world.renderItems(container);
         
+        gameTime = container.getTime();
         
         ArrayList<Bullet> bullets = player.getBullets();
         for (int w = 0; w < bullets.size(); w++) {

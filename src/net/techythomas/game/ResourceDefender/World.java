@@ -111,9 +111,9 @@ public class World {
 		worldItems.remove(item);
 	}
 	
-	public void renderItems() {
+	public void renderItems(GameContainer container) {
 		for (Item item : worldItems) {
-			item.render();
+			item.render(container);
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class World {
 	
 	public void render(Graphics g) throws SlickException {
 		background.draw();
-		renderItems();
+		//renderItems();
 		workbench.render();
 		
 		if(ALLOW_DEBUGGING) {
@@ -159,6 +159,7 @@ public class World {
 				}
 				this.rect2 = rectangle;
 				Image texture = new Image("res/items/resource.png");
+				float yBobbing = (float) Math.sin(ResourceDefender.getTime() / 1000f * 6);
 				texture.draw(rectangle.getX(), rectangle.getY());
 			}
 			for (Item item : worldItems) {
